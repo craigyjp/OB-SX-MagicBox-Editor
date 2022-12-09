@@ -8,5 +8,5 @@ It uses MIDI CC messages to control all the functions that the MagicBox unlocks 
 
 I developed this blind with no access to an OB-SX or MagicBox to test with.
 
-This repo was setup to allow collaboration between Bernd Bruing and myself to resolve issues.
+This repo was setup to allow collaboration between Bernd Brüning and myself to resolve issues.
 
