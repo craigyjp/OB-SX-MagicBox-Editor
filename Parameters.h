@@ -2,7 +2,9 @@
 byte midiChannel = 1;
 byte ccChannel = 1;
 byte midiOutCh = 1;
+byte Voices, oldVoices;
 int readresdivider = 2;
+boolean patchRecall = false;
 
 #define TOLERANCE 2
 

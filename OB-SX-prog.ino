@@ -123,7 +123,9 @@ void setup()
   oldpickUpActive = pickUpActive;
   Detune = getDetune();
   Program = getProgram();
-
+  Voices = getNumberVoices();
+  oldVoices = Voices;
+  midiCCOut(120, Voices, 16);
   recallPatch(patchNo); //Load first patch
 }
 
@@ -297,14 +299,20 @@ void updateosc_2_fm()
 {
   if (osc_2_fm == 127)
   {
-    showCurrentParameterPage("Osc 2 Mod", "On");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("Osc 2 Mod", "On");
+    }
     sr.writePin(OSC_2_MOD_LED, HIGH);  // LED on
     midiCCOut((CCosc_2_fm - 5), 127, 1);
 
   }
   else
   {
-    showCurrentParameterPage("Osc 2 Mod", "Off");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("Osc 2 Mod", "Off");
+    }
     sr.writePin(OSC_2_MOD_LED, LOW);  // LED off
     midiCCOut((CCosc_2_fm - 5), 0, 1);
   }
@@ -314,13 +322,19 @@ void updatevcf_mod()
 {
   if (vcf_mod == 127)
   {
-    showCurrentParameterPage("VCF Mod", "On");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("VCF Mod", "On");
+    }
     sr.writePin(VCF_MOD_LED, HIGH);  // LED on
     midiCCOut((CCvcf_mod - 6), 127, 2);
   }
   else
   {
-    showCurrentParameterPage("VCF Mod", "Off");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("VCF Mod", "Off");
+    }
     sr.writePin(VCF_MOD_LED, LOW);  // LED off
     midiCCOut((CCvcf_mod - 6), 0, 2);
   }
@@ -330,13 +344,19 @@ void updateosc_1_wave()
 {
   if (osc_1_wave == 127)
   {
-    showCurrentParameterPage("Osc 1 Wave", "Pulse");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("Osc 1 Wave", "Pulse");
+    }
     sr.writePin(OSC_1_WAVE_LED, HIGH);  // LED on
     midiCCOut((CCosc_1_wave - 7), 127, 3);
   }
   else
   {
-    showCurrentParameterPage("Osc 1 Wave", "Sawtooth");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("Osc 1 Wave", "Sawtooth");
+    }
     sr.writePin(OSC_1_WAVE_LED, LOW);  // LED off
     midiCCOut((CCosc_1_wave - 7), 0, 3);
   }
@@ -346,13 +366,19 @@ void updateosc_2_wave()
 {
   if (osc_2_wave == 127)
   {
-    showCurrentParameterPage("Osc 2 Wave", "Pulse");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("Osc 2 Wave", "Pulse");
+    }
     sr.writePin(OSC_2_WAVE_LED, HIGH);  // LED on
     midiCCOut((CCosc_2_wave - 8), 127, 4);
   }
   else
   {
-    showCurrentParameterPage("Osc 2 Wave", "Sawtooth");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("Osc 2 Wave", "Sawtooth");
+    }
     sr.writePin(OSC_2_WAVE_LED, LOW);  // LED off
     midiCCOut((CCosc_2_wave - 8), 0, 4);
   }
@@ -362,13 +388,19 @@ void updatelfo_wave()
 {
   if (lfo_wave == 127)
   {
-    showCurrentParameterPage("LFO Wave", "Square");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("LFO Wave", "Square");
+    }
     sr.writePin(LFO_WAVE_LED, HIGH);  // LED on
     midiCCOut((CClfo_wave - 9), 127, 5);
   }
   else
   {
-    showCurrentParameterPage("LFO Wave", "Triangle");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("LFO Wave", "Triangle");
+    }
     sr.writePin(LFO_WAVE_LED, LOW);  // LED off
     midiCCOut((CClfo_wave - 9), 0, 5);
   }
@@ -378,13 +410,19 @@ void updateosc_1_fm()
 {
   if (osc_1_fm == 127)
   {
-    showCurrentParameterPage("Osc 1 Mod", "On");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("Osc 1 Mod", "On");
+    }
     sr.writePin(OSC_1_MOD_LED, HIGH);  // LED on
     midiCCOut((CCosc_1_fm - 10), 127, 6);
   }
   else
   {
-    showCurrentParameterPage("Osc 1 Mod", "Off");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("Osc 1 Mod", "Off");
+    }
     sr.writePin(OSC_1_MOD_LED, LOW);  // LED off
     midiCCOut((CCosc_1_fm - 10), 0, 6);
   }
@@ -394,13 +432,19 @@ void updateosc_1_pwm()
 {
   if (osc_1_pwm == 127)
   {
-    showCurrentParameterPage("Osc 1 PWM", "On");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("Osc 1 PWM", "On");
+    }
     sr.writePin(OSC_1_PWM_LED, HIGH);  // LED on
     midiCCOut((CCosc_1_pwm - 14), 127, 1);
   }
   else
   {
-    showCurrentParameterPage("Osc 1 PWM", "Off");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("Osc 1 PWM", "Off");
+    }
     sr.writePin(OSC_1_PWM_LED, LOW);  // LED off
     midiCCOut((CCosc_1_pwm - 14), 0, 1);
   }
@@ -410,13 +454,19 @@ void updateosc_2_pwm()
 {
   if (osc_2_pwm == 127)
   {
-    showCurrentParameterPage("Osc 2 PWM", "On");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("Osc 2 PWM", "On");
+    }
     sr.writePin(OSC_2_PWM_LED, HIGH);  // LED on
     midiCCOut((CCosc_2_pwm - 15), 127, 2);
   }
   else
   {
-    showCurrentParameterPage("Osc 2 PWM", "Off");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("Osc 2 PWM", "Off");
+    }
     sr.writePin(OSC_2_PWM_LED, LOW);  // LED off
     midiCCOut((CCosc_2_pwm - 15), 0, 2);
   }
@@ -426,13 +476,19 @@ void updatevcf_track()
 {
   if (vcf_track == 127)
   {
-    showCurrentParameterPage("KBD Track", "On");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("KBD Track", "On");
+    }
     sr.writePin(KEYTRACK_LED, HIGH);  // LED on
     midiCCOut((CCvcf_track - 16), 127, 3);
   }
   else
   {
-    showCurrentParameterPage("KBD Track", "Off");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("KBD Track", "Off");
+    }
     sr.writePin(KEYTRACK_LED, LOW);  // LED off
     midiCCOut((CCvcf_track - 16), 0, 3);
   }
@@ -442,13 +498,19 @@ void updateosc_2_half()
 {
   if (osc_2_half == 127)
   {
-    showCurrentParameterPage("Osc 2 Half", "On");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("Osc 2 Half", "On");
+    }
     sr.writePin(OSC_2_HALF_LED, HIGH);  // LED on
     midiCCOut((CCosc_2_half - 17), 127, 4);
   }
   else
   {
-    showCurrentParameterPage("Osc 2 Half", "Off");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("Osc 2 Half", "Off");
+    }
     sr.writePin(OSC_2_HALF_LED, LOW);  // LED off
     midiCCOut((CCosc_2_half - 17), 0, 4);
   }
@@ -458,13 +520,19 @@ void updatesync()
 {
   if (sync == 127)
   {
-    showCurrentParameterPage("Sync", "On");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("Sync", "On");
+    }
     sr.writePin(SYNC_LED, HIGH);  // LED on
     midiCCOut((CCsync - 18), 127, 5);
   }
   else
   {
-    showCurrentParameterPage("Sync", "Off");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("Sync", "Off");
+    }
     sr.writePin(SYNC_LED, LOW);  // LED off
     midiCCOut((CCsync - 18), 0, 5);
   }
@@ -474,13 +542,19 @@ void updatecrossmod()
 {
   if (crossmod == 127)
   {
-    showCurrentParameterPage("X-Mod", "On");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("X-Mod", "On");
+    }
     sr.writePin(CROSSMOD_LED, HIGH);  // LED on
     midiCCOut((CCcrossmod - 19), 127, 6);
   }
   else
   {
-    showCurrentParameterPage("X-Mod", "Off");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("X-Mod", "Off");
+    }
     sr.writePin(CROSSMOD_LED, LOW);  // LED off
     midiCCOut((CCcrossmod - 19), 0, 6);
   }
@@ -491,13 +565,19 @@ void updateUnison()
 {
   if (unison == 127)
   {
-    showCurrentParameterPage("Unison", "On");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("Unison", "On");
+    }
     sr.writePin(UNISON_LED, HIGH);  // LED on
     midiCCOut((CCunison - 20), 127, 7);
   }
   else
   {
-    showCurrentParameterPage("Unison", "Off");
+    if (!patchRecall)
+    {
+      showCurrentParameterPage("Unison", "Off");
+    }
     sr.writePin(UNISON_LED, LOW);  // LED off
     midiCCOut((CCunison - 20), 0, 7);
   }
@@ -933,6 +1013,7 @@ void setCurrentPatchData(String data[])
   midiCCOut(CCosc_1_freq, osc_1_freq, 1);
   delay(1);
 
+  patchRecall = true;
   updateosc_2_fm();
   updatevcf_mod();
   updateosc_1_wave();
@@ -946,6 +1027,7 @@ void setCurrentPatchData(String data[])
   updatesync();
   updatecrossmod();
   updateUnison();
+  patchRecall = false;
 
   if (unison == 127)
   {
@@ -1156,6 +1238,11 @@ void onButtonPress(uint16_t btnIndex, uint8_t btnType) {
 
 void checkSwitches()
 {
+  if (Voices != oldVoices)
+  {
+    midiCCOut(120, Voices, 16);
+    oldVoices = Voices;
+  }
 
   saveButton.update();
   if (saveButton.read() == LOW && saveButton.duration() > HOLD_DURATION)
