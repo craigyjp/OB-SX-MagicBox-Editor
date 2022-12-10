@@ -1,4 +1,4 @@
-#define SETTINGSOPTIONSNO 5
+#define SETTINGSOPTIONSNO 6
 #define SETTINGSVALUESNO 18//Maximum number of settings option values needed
 int settingsValueIndex = 0;//currently selected settings option value index
 
@@ -15,6 +15,7 @@ void settingsPickupEnable(char * value);
 void settingsDetune(char * value);
 void settingsProgram(char * value);
 void settingsNumberVoices(char * value);
+void settingsModAmount(char * value);
 void settingsHandler(char * s, void (*f)(char*));
 
 int currentIndexEncoderDir();
@@ -22,6 +23,7 @@ int currentIndexPickupEnable();
 int currentIndexDetune();
 int currentIndexProgram();
 int currentIndexNumberVoices();
+int currentIndexModAmount();
 int getCurrentIndex(int (*f)());
 
 void settingsEncoderDir(char * value) {
@@ -65,6 +67,15 @@ void settingsNumberVoices(char * value) {
   storeNumberVoices(Voices);
 }
 
+void settingsModAmount(char * value) {
+  if (strcmp(value, "Off") == 0) {
+    modAmount = false;
+  } else {
+    modAmount = true;
+  }
+  storeModAmount(modAmount ? 1 : 0);
+}
+
 //Takes a pointer to a specific method for the settings option and invokes it.
 void settingsHandler(char * s, void (*f)(char*) ) {
   f(s);
@@ -90,6 +101,10 @@ int currentIndexNumberVoices() {
   return getNumberVoices() -1;
 }
 
+int currentIndexModAmount() {
+  return getModAmount() ? 1 : 0;
+}
+
 //Takes a pointer to a specific method for the current settings option value and invokes it.
 int getCurrentIndex(int (*f)() ) {
   return f();
@@ -102,6 +117,7 @@ void setUpSettings() {
   settingsOptions.push(SettingsOption{"Encoder", {"Type 1", "Type 2", '\0'}, settingsEncoderDir, currentIndexEncoderDir});
   settingsOptions.push(SettingsOption{"Pick-up", {"Off", "On", '\0'}, settingsPickupEnable, currentIndexPickupEnable});
   settingsOptions.push(SettingsOption{"Unison Det", {"Off", "On", '\0'}, settingsDetune, currentIndexDetune});
+  settingsOptions.push(SettingsOption{"Mod Amount", {"Off", "On", '\0'}, settingsModAmount, currentIndexModAmount});
   settingsOptions.push(SettingsOption{"PGM Change", {"Off", "On", '\0'}, settingsProgram, currentIndexProgram});
   settingsOptions.push(SettingsOption{"Voices", {"1", "2", "3", "4", "5", "6", '\0'}, settingsNumberVoices, currentIndexNumberVoices});
 }

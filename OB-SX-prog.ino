@@ -126,6 +126,7 @@ void setup()
   Voices = getNumberVoices();
   oldVoices = Voices;
   midiCCOut(120, Voices, 16);
+  modAmount = getModAmount();
   recallPatch(patchNo); //Load first patch
 }
 
@@ -249,8 +250,16 @@ void updatepulsewidth()
 
 void updatemodulation()
 {
-  showCurrentParameterPage("Modulation", String(modulation));
-  midiCCOut((CCmodulation), modulation, 1);
+  if (modAmount == true)
+  {
+    showCurrentParameterPage("MIDI Mod Dep", String(midiModAmount));
+    midiCCOut(77, midiModAmount, 1);
+  }
+  else
+  {
+    showCurrentParameterPage("Modulation", String(modulation));
+    midiCCOut((CCmodulation), modulation, 1);
+  }
 }
 
 void updateoscpwm ()
@@ -743,11 +752,19 @@ void myControlChange(byte channel, byte control, int value)
       break;
 
     case CCmodulation:
-      if (pickUpActive && modulationpickUp && ((modulationPrevValue + TOLERANCE) <  (value) || (modulationPrevValue - TOLERANCE) >  (value))) return; //PICK-UP
-      modulationpickUp = false;
-      modulation =  value / readresdivider;
-      updatemodulation();
-      modulationPrevValue = modulation; //PICK-UP
+      if (modAmount == true)
+      {
+        midiModAmount =  value / readresdivider;
+        updatemodulation();
+      }
+      else
+      {
+        if (pickUpActive && modulationpickUp && ((modulationPrevValue + TOLERANCE) <  (value) || (modulationPrevValue - TOLERANCE) >  (value))) return; //PICK-UP
+        modulationpickUp = false;
+        modulation =  value / readresdivider;
+        updatemodulation();
+        modulationPrevValue = modulation; //PICK-UP
+      }
       break;
 
     case CCoscpwm:
@@ -973,6 +990,7 @@ void setCurrentPatchData(String data[])
   voice4_detune = data[36].toInt();
   voice5_detune = data[37].toInt();
   voice6_detune = data[38].toInt();
+  midiModAmount = data[39].toInt();
 
   midiCCOut(CCvcf_attack, vcf_attack, 1);
   delay(1);
@@ -1038,6 +1056,10 @@ void setCurrentPatchData(String data[])
     midiCCOut(108, voice5_detune, 5);
     midiCCOut(108, voice6_detune, 6);
   }
+  
+  midiCCOut(77, midiModAmount, 1);
+  
+  
 
   //Patchname
   updatePatchname();
@@ -1053,7 +1075,7 @@ String getCurrentPatchData()
          String(osc_2_freq) + "," + String(osc_1_freq) + "," +
          String(osc_2_fm) + "," + String(vcf_mod) + "," + String(osc_1_wave) + "," + String(osc_2_wave) + "," + String(lfo_wave) + "," + String(osc_1_fm) + "," + String(osc_1_pwm) + "," + String(osc_2_pwm) + "," + String(vcf_track) + "," +
          String(osc_2_half) + "," + String(sync) + "," + String(crossmod) + "," + String(unison) + "," +
-         String(voice1_detune) + "," + String(voice2_detune) + "," + String(voice3_detune) + "," + String(voice4_detune) + "," + String(voice5_detune) + "," + String(voice6_detune);
+         String(voice1_detune) + "," + String(voice2_detune) + "," + String(voice3_detune) + "," + String(voice4_detune) + "," + String(voice5_detune) + "," + String(voice6_detune) + "," + String(midiModAmount);
 }
 
 void checkMux()

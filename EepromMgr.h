@@ -2,6 +2,7 @@
 
 #define EEPROM_ENCODER_DIR 1
 #define EEPROM_VOICES 4
+#define EEPROM_MOD_AMOUNT 5
 #define EEPROM_PICKUP_ENABLE 6
 #define EEPROM_DETUNE 7
 #define EEPROM_PROGRAM 8
@@ -33,7 +34,7 @@ void storePickupEnable(byte pickUpActive)
 boolean getDetune()
 {
   byte Detune = EEPROM.read(EEPROM_DETUNE);
-  if (Detune < 0 || Detune > 1)return false; //If EEPROM has no pickup enable stored
+  if (Detune < 0 || Detune > 1)return false; //If EEPROM has no detune enable stored
   return Detune == 1 ? true : false;
 }
 
@@ -45,13 +46,25 @@ void storeDetune(byte Detune)
 boolean getProgram()
 {
   byte Program = EEPROM.read(EEPROM_PROGRAM);
-  if (Program < 0 || Program > 1)return false; //If EEPROM has no pickup enable stored
+  if (Program < 0 || Program > 1)return false; //If EEPROM has no program enable stored
   return Program == 1 ? true : false;
 }
 
 void storeProgram(byte Program)
 {
   EEPROM.update(EEPROM_PROGRAM, Program);
+}
+
+boolean getModAmount()
+{
+  byte modAmount = EEPROM.read(EEPROM_MOD_AMOUNT);
+  if (modAmount < 0 || modAmount > 1)return false; //If EEPROM has no modAmount enable stored
+  return modAmount == 1 ? true : false;
+}
+
+void storeModAmount(byte modAmount)
+{
+  EEPROM.update(EEPROM_MOD_AMOUNT, modAmount);
 }
 
 int getNumberVoices() {

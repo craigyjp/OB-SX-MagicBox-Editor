@@ -54,6 +54,8 @@ int voice4_detune = 0;
 int voice5_detune = 0;
 int voice6_detune = 0;
 
+int midiModAmount = 0;
+
 int vcf_attackPrevValue = 0; //Need to set these when patch loaded
 int vca_attackPrevValue = 0; //Need to set these when patch loaded
 int vcf_decayPrevValue = 0; //Need to set these when patch loaded
@@ -79,6 +81,7 @@ int returnvalue = 0;
 boolean pickUp = true;//settings option (EEPROM)
 boolean pickUpActive = false;
 boolean Detune = false;
+boolean modAmount = false;
 boolean oldpickUpActive;
 boolean Program = false;
 boolean vcf_attackpickUp = true;
